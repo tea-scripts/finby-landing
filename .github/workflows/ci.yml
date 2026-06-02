@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck & build
+    runs-on: ubuntu-latest
+    env:
+      # Dummy values so `prisma generate` (postinstall) and `next build` run
+      # without real credentials — no DB connection happens at build time.
+      DATABASE_URL: postgresql://user:password@localhost:5432/budgy?schema=public
+      NEXT_PUBLIC_SITE_URL: https://budgy.app
+    steps:
+      - uses: actions/checkout@v4
+
+      # node-canvas (used only by the asset-generation script) builds during
+      # install; its system libs keep the install green even on a prebuild miss.
+      - name: Install canvas system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm exec tsc --noEmit
+
+      - name: Build
+        run: pnpm build
