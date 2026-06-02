@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { MotionProvider } from "@/components/providers/MotionProvider";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -9,10 +10,6 @@ const inter = Inter({
   variable: "--font-inter",
   display: "swap",
 });
-
-// metadataBase requires an absolute URL. Fall back to the production domain so
-// builds never crash if NEXT_PUBLIC_SITE_URL is unset in an environment.
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://budgy.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
