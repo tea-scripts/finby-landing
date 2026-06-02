@@ -1,0 +1,22 @@
+// Prisma 7 — new `prisma-client` generator (ESM) + driver adapter pattern.
+// The datasource intentionally has no `url`; the CLI reads it from
+// prisma.config.ts (datasource.url) and the runtime client connects via the
+// PrismaPg driver adapter in src/lib/prisma.ts.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model WaitlistSignup {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  source    String   @default("landing")
+  createdAt DateTime @default(now())
+
+  @@map("waitlist_signups")
+}
