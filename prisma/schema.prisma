@@ -16,6 +16,11 @@ model WaitlistSignup {
   id        String   @id @default(cuid())
   email     String   @unique
   source    String   @default("landing")
+  // Approximate, IP-derived location captured from Vercel geo headers at
+  // signup time. Nullable — absent on local dev or when headers are missing.
+  country   String?
+  city      String?
+  region    String?
   createdAt DateTime @default(now())
 
   @@map("waitlist_signups")

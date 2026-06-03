@@ -33,6 +33,7 @@ pnpm dev                     # http://localhost:3000
 | `DATABASE_URL` | Prisma Postgres connection string |
 | `RESEND_API_KEY` | Resend API key |
 | `RESEND_FROM_EMAIL` | Sender — **must be on a Resend-verified domain** |
+| `WAITLIST_NOTIFY_EMAIL` | _(optional)_ Address that gets a notification on each new signup; unset disables it |
 | `NEXT_PUBLIC_SITE_URL` | Canonical site URL (e.g. `https://finby.app`) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | _(optional)_ Search Console token |
 
@@ -48,14 +49,17 @@ pnpm dev                     # http://localhost:3000
 ## Data model
 
 `waitlist_signups` (`prisma/schema.prisma`): `id` (cuid), unique `email`,
-`source` (default `landing`), `createdAt`. The generated client is written to
+`source` (default `landing`), approximate IP-derived `country` / `city` /
+`region` (nullable), `createdAt`. The generated client is written to
 `src/app/generated/prisma` (gitignored).
 
 ## Waitlist flow
 
 `POST /api/waitlist` → validates + normalizes the email (trim/lowercase),
-de-dupes, inserts, then sends a Resend confirmation. Email delivery is isolated:
-a Resend failure is logged but never fails the signup.
+captures approximate location from Vercel geo headers, de-dupes, inserts, then
+sends a Resend confirmation to the subscriber **and** a notification to
+`WAITLIST_NOTIFY_EMAIL` (email, position, location, source). Both emails are
+isolated: a Resend failure is logged but never fails the signup.
 
 ## Deploy (Vercel)
 

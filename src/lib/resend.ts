@@ -47,3 +47,74 @@ export async function sendConfirmationEmail(to: string): Promise<void> {
     throw new Error(`Resend: ${error.message}`);
   }
 }
+
+export interface WaitlistNotification {
+  email: string;
+  createdAt: Date;
+  country: string | null;
+  city: string | null;
+  region: string | null;
+  source: string;
+  /** 1-based position on the waitlist (their number on the list). */
+  position: number;
+}
+
+function row(label: string, value: string): string {
+  return `
+    <tr>
+      <td style="padding:6px 16px 6px 0;font-size:13px;color:rgba(232,237,245,0.55);white-space:nowrap;vertical-align:top;">${label}</td>
+      <td style="padding:6px 0;font-size:14px;color:#e8edf5;">${value}</td>
+    </tr>`;
+}
+
+function notificationHtml(n: WaitlistNotification): string {
+  const location =
+    [n.city, n.region, n.country].filter(Boolean).join(", ") || "Unknown";
+  return `
+  <div style="margin:0;padding:0;background-color:#06101f;font-family:Inter,Helvetica,Arial,sans-serif;">
+    <div style="max-width:480px;margin:0 auto;padding:40px 28px;">
+      <p style="font-size:20px;font-weight:800;color:#e8edf5;margin:0 0 4px;">
+        New waitlist signup 🎉
+      </p>
+      <p style="font-size:14px;color:rgba(232,237,245,0.7);margin:0 0 24px;">
+        Someone just joined the Finby waitlist.
+      </p>
+      <table style="border-collapse:collapse;width:100%;">
+        ${row("Email", n.email)}
+        ${row("Position", `#${n.position}`)}
+        ${row("Location", location)}
+        ${row("Source", n.source)}
+        ${row("Joined", n.createdAt.toISOString().replace("T", " ").slice(0, 19) + " UTC")}
+      </table>
+    </div>
+  </div>`;
+}
+
+/**
+ * Notifies the operator that someone joined the waitlist. `replyTo` is the new
+ * subscriber's address so a reply goes straight to them. Throws on a Resend
+ * error (or missing config) so the caller can isolate the failure.
+ */
+export async function sendWaitlistNotification(
+  n: WaitlistNotification,
+): Promise<void> {
+  const from = process.env.RESEND_FROM_EMAIL;
+  const to = process.env.WAITLIST_NOTIFY_EMAIL;
+  if (!from || !to) {
+    throw new Error(
+      "RESEND_FROM_EMAIL or WAITLIST_NOTIFY_EMAIL is not configured.",
+    );
+  }
+
+  const { error } = await resend.emails.send({
+    from,
+    to,
+    replyTo: n.email,
+    subject: `New Finby waitlist signup: ${n.email} (#${n.position})`,
+    html: notificationHtml(n),
+  });
+
+  if (error) {
+    throw new Error(`Resend: ${error.message}`);
+  }
+}
