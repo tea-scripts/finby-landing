@@ -1,4 +1,4 @@
-const FALLBACK_SITE_URL = "https://budgy.app";
+const FALLBACK_SITE_URL = "https://finby.app";
 
 /**
  * Resolves NEXT_PUBLIC_SITE_URL to a valid absolute origin (no trailing slash).
@@ -22,3 +22,11 @@ function resolveSiteUrl(): string {
 }
 
 export const siteUrl = resolveSiteUrl();
+
+/**
+ * The live waitlist counter is only rendered once real signups cross this
+ * threshold. Below it, a tiny real number reads as weak social proof, so the
+ * UI shows a "be one of the first" message instead — honest either way. We
+ * never fabricate or pad the count.
+ */
+export const WAITLIST_DISPLAY_THRESHOLD = 50;

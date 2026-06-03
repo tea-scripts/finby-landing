@@ -14,12 +14,12 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Budgy — Stop tracking. Start talking.",
-    template: "%s | Budgy",
+    default: "Finby — Stop tracking. Start talking.",
+    template: "%s | Finby",
   },
   description:
     "The AI finance companion that logs your expenses, tracks your budget, " +
-    "and gives you real advice — all through conversation. No forms. No dashboards.",
+    "and gives you real advice — all through conversation. No forms. No dashboards. Just chat.",
   keywords: [
     "personal finance app",
     "AI budget tracker",
@@ -28,25 +28,25 @@ export const metadata: Metadata = {
     "money management",
     "AI financial assistant",
   ],
-  authors: [{ name: "Budgy" }],
-  creator: "Budgy",
+  authors: [{ name: "Finby" }],
+  creator: "Finby",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "Budgy",
-    title: "Budgy — Stop tracking. Start talking.",
+    siteName: "Finby",
+    title: "Finby — Stop tracking. Start talking.",
     description:
       "The AI finance companion that logs, tracks, and advises through conversation.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Budgy" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Finby" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Budgy — Stop tracking. Start talking.",
+    title: "Finby — Stop tracking. Start talking.",
     description:
       "The AI finance companion that logs, tracks, and advises through conversation.",
     images: ["/og-image.png"],
-    creator: "@budgyapp",
+    creator: "@finbyapp",
   },
   robots: {
     index: true,
@@ -80,7 +80,7 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
       url: siteUrl,
-      name: "Budgy",
+      name: "Finby",
       description: "AI-powered conversational personal finance app",
       potentialAction: {
         "@type": "SearchAction",
@@ -94,7 +94,7 @@ const jsonLd = {
     {
       "@type": "SoftwareApplication",
       "@id": `${siteUrl}/#app`,
-      name: "Budgy",
+      name: "Finby",
       applicationCategory: "FinanceApplication",
       operatingSystem: "Web, iOS, Android",
       description: "Conversational AI personal finance companion",

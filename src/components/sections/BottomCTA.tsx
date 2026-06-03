@@ -48,7 +48,7 @@ export function BottomCTA() {
                 className="mt-3 text-sm"
                 style={{ color: "var(--color-text-muted)" }}
               >
-                We&apos;ll notify you the moment Budgy is ready.
+                We&apos;ll notify you the moment Finby is ready.
               </p>
             </div>
           </div>

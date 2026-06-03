@@ -28,7 +28,7 @@ export function NavBar() {
       }}
     >
       <nav className="section-shell flex items-center justify-between py-4">
-        <a href="#top" aria-label="Budgy home">
+        <a href="#top" aria-label="Finby home">
           <Logo />
         </a>
         <span className="pill">

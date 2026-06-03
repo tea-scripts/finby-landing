@@ -20,8 +20,8 @@ jobs:
     env:
       # Dummy values so `prisma generate` (postinstall) and `next build` run
       # without real credentials — no DB connection happens at build time.
-      DATABASE_URL: postgresql://user:password@localhost:5432/budgy?schema=public
-      NEXT_PUBLIC_SITE_URL: https://budgy.app
+      DATABASE_URL: postgresql://user:password@localhost:5432/finby?schema=public
+      NEXT_PUBLIC_SITE_URL: https://finby.app
     steps:
       - uses: actions/checkout@v4
 

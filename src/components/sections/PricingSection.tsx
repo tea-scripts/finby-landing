@@ -76,7 +76,7 @@ export function PricingSection() {
             Simple, honest pricing
           </h2>
           <p className="mt-4 text-base" style={{ color: "var(--color-text-secondary)", lineHeight: 1.7 }}>
-            Start free. Upgrade when Budgy earns it.
+            Start free. Upgrade when Finby earns it.
           </p>
         </Reveal>
 

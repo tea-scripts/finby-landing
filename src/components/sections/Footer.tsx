@@ -22,7 +22,7 @@ export function Footer() {
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
-            © 2026 Budgy. All rights reserved.
+            © 2026 Finby. All rights reserved.
           </p>
           <nav className="flex gap-6">
             {LINKS.map((link) => (

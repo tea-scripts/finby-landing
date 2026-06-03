@@ -1,6 +1,6 @@
-# Budgy — Landing
+# Finby — Landing
 
-The pre-launch waitlist and marketing site for **Budgy**, the conversational AI
+The pre-launch waitlist and marketing site for **Finby**, the conversational AI
 personal-finance app. _Stop tracking. Start talking._
 
 ## Stack
@@ -33,7 +33,7 @@ pnpm dev                     # http://localhost:3000
 | `DATABASE_URL` | Prisma Postgres connection string |
 | `RESEND_API_KEY` | Resend API key |
 | `RESEND_FROM_EMAIL` | Sender — **must be on a Resend-verified domain** |
-| `NEXT_PUBLIC_SITE_URL` | Canonical site URL (e.g. `https://budgy.app`) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site URL (e.g. `https://finby.app`) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | _(optional)_ Search Console token |
 
 ## Scripts

@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { RotateCcw } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 
 export interface ChatMessage {
-  from: "user" | "budgy";
+  from: "user" | "finby";
   text: string;
 }
 
@@ -14,17 +14,17 @@ export interface ChatMessage {
 export const CHAT_SCRIPT: ChatMessage[] = [
   { from: "user", text: "I spent $40 on shoes from Shein today 👟" },
   {
-    from: "budgy",
+    from: "finby",
     text: "Logged $40.00 under Shopping from Shein. That puts your shopping spend at $127 this month — 85% of your $150 budget, with 11 days left. ⚠️",
   },
   { from: "user", text: "What did I spend the most on this month?" },
   {
-    from: "budgy",
+    from: "finby",
     text: "Your top 3:\n1. Dining — $218 (29%)\n2. Shopping — $127 (17%)\n3. Transport — $94 (13%)\nWant me to set a dining limit for next month?",
   },
   { from: "user", text: "What's a good stock to buy right now?" },
   {
-    from: "budgy",
+    from: "finby",
     text: "For your $500/mo investing budget, VOO (S&P 500 ETF) at $487.20 is a strong long-term hold. Low cost, broad exposure. Want a breakdown? 📈",
   },
 ];
@@ -89,7 +89,7 @@ function TypingIndicator() {
       exit={{ opacity: 0 }}
       transition={SPRING}
       className="flex justify-start"
-      aria-label="Budgy is typing"
+      aria-label="Finby is typing"
     >
       <div
         className="flex items-center gap-1 rounded-2xl px-4 py-3.5"
@@ -242,6 +242,14 @@ export function ChatDemo() {
   const [typing, setTyping] = useState(false);
   const [phase, setPhase] = useState<Phase>("playing");
   const [cycle, setCycle] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Keep the latest message in view inside the fixed-height window, so older
+  // messages scroll up and out instead of growing the page.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [count, typing, phase, cycle]);
 
   useEffect(() => {
     if (reduceMotion) {
@@ -301,17 +309,23 @@ export function ChatDemo() {
         </span>
       </div>
 
-      <div className="flex min-h-[420px] flex-col justify-end gap-3 px-4 py-5">
-        <AnimatePresence mode="popLayout" initial={false}>
-          {CHAT_SCRIPT.slice(0, count).map((message, i) => (
-            <Bubble key={i} message={message} />
-          ))}
-          {typing ? <TypingIndicator key="typing" /> : null}
-          {phase === "breakdown" ? <BreakdownBubble key="breakdown" /> : null}
-        </AnimatePresence>
+      <div
+        ref={scrollRef}
+        className="flex h-[440px] flex-col overflow-y-auto px-4 py-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {/* mt-auto keeps a short conversation pinned to the bottom; once it
+            overflows the fixed height, older messages scroll up and out. */}
+        <div className="mt-auto flex flex-col gap-3">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {CHAT_SCRIPT.slice(0, count).map((message, i) => (
+              <Bubble key={i} message={message} />
+            ))}
+            {typing ? <TypingIndicator key="typing" /> : null}
+            {phase === "breakdown" ? <BreakdownBubble key="breakdown" /> : null}
+          </AnimatePresence>
 
-        <AnimatePresence mode="wait" initial={false}>
-          {showChip ? (
+          <AnimatePresence mode="wait" initial={false}>
+            {showChip ? (
             <m.div
               key="chip"
               initial={{ opacity: 0, y: 6 }}
@@ -351,7 +365,8 @@ export function ChatDemo() {
               </button>
             </m.div>
           ) : null}
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

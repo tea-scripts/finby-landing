@@ -20,12 +20,12 @@ const FEATURES: Feature[] = [
   {
     icon: Globe,
     title: "Multi-currency native",
-    body: "Earning USD, spending PHP or NGN? Budgy tracks every currency at the live rate, frozen at the moment you spent it.",
+    body: "Earning USD, spending PHP or NGN? Finby tracks every currency at the live rate, frozen at the moment you spent it.",
   },
   {
     icon: Bell,
     title: "Live budget warnings",
-    body: "Set a monthly limit per category. Budgy warns you at 75%, 90%, and when you're over — right in the conversation.",
+    body: "Set a monthly limit per category. Finby warns you at 75%, 90%, and when you're over — right in the conversation.",
   },
   {
     icon: TrendingUp,
@@ -35,7 +35,7 @@ const FEATURES: Feature[] = [
   {
     icon: Brain,
     title: "Knows your habits",
-    body: "On Premium, Budgy builds a financial dossier over time and gives you advice that actually fits your life.",
+    body: "On Premium, Finby builds a financial dossier over time and gives you advice that actually fits your life.",
   },
   {
     icon: Users,
@@ -64,7 +64,7 @@ export function FeaturesSection() {
             Everything you need. Nothing you don&apos;t.
           </h2>
           <p className="mt-4 text-base" style={{ color: "var(--color-text-secondary)", lineHeight: 1.7 }}>
-            Budgy replaces the entire stack of finance apps you&apos;ve been juggling.
+            Finby replaces the entire stack of finance apps you&apos;ve been juggling.
           </p>
         </Reveal>
 

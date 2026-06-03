@@ -18,11 +18,11 @@ const STEPS: Step[] = [
   {
     n: "2",
     title: "Start a conversation",
-    body: "Tell Budgy what you spent, earned, or want to track. It handles the rest — no forms, no navigation.",
+    body: "Tell Finby what you spent, earned, or want to track. It handles the rest — no forms, no navigation.",
   },
   {
     n: "3",
-    title: "Let Budgy advise you",
+    title: "Let Finby advise you",
     body: "Ask anything — “Am I on track?” or “What stocks should I hold?” — and get a data-backed honest answer.",
   },
 ];

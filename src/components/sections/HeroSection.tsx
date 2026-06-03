@@ -4,6 +4,7 @@ import { m, useReducedMotion, type Variants } from "framer-motion";
 import { WaitlistForm } from "@/components/ui/WaitlistForm";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { ChatDemo } from "@/components/sections/ChatDemo";
+import { WAITLIST_DISPLAY_THRESHOLD } from "@/lib/site";
 
 interface Particle {
   left: number;
@@ -37,8 +38,9 @@ const LINE_ONE = ["Stop", "tracking."];
 const LINE_TWO = ["Start", "talking."];
 const AVATAR_TINTS = ["18%", "38%", "58%", "78%"];
 
-export function HeroSection() {
+export function HeroSection({ waitlistCount }: { waitlistCount: number }) {
   const reduceMotion = useReducedMotion();
+  const showCount = waitlistCount >= WAITLIST_DISPLAY_THRESHOLD;
 
   const headline: Variants = {
     hidden: {},
@@ -146,7 +148,7 @@ export function HeroSection() {
           style={{ color: "var(--color-text-secondary)", lineHeight: 1.7 }}
           {...fade(0.45)}
         >
-          Budgy is the AI finance companion that logs your expenses, tracks your
+          Finby is the AI finance companion that logs your expenses, tracks your
           budget, and gives you real advice — all through plain conversation. No
           forms. No dashboards. Just chat.
         </m.p>
@@ -169,23 +171,31 @@ export function HeroSection() {
         </m.div>
 
         <div className="mt-10 flex items-center justify-center gap-3">
-          <m.div className="flex -space-x-2.5" variants={avatars} initial="hidden" animate="show">
-            {AVATAR_TINTS.map((tint, i) => (
-              <m.span
-                key={i}
-                variants={avatar}
-                className="h-8 w-8 rounded-full"
-                style={{
-                  backgroundColor: `color-mix(in srgb, var(--color-accent) ${tint}, var(--color-surface-hover))`,
-                  border: "2px solid var(--color-bg)",
-                }}
-                aria-hidden
-              />
-            ))}
-          </m.div>
+          {showCount ? (
+            <m.div className="flex -space-x-2.5" variants={avatars} initial="hidden" animate="show">
+              {AVATAR_TINTS.map((tint, i) => (
+                <m.span
+                  key={i}
+                  variants={avatar}
+                  className="h-8 w-8 rounded-full"
+                  style={{
+                    backgroundColor: `color-mix(in srgb, var(--color-accent) ${tint}, var(--color-surface-hover))`,
+                    border: "2px solid var(--color-bg)",
+                  }}
+                  aria-hidden
+                />
+              ))}
+            </m.div>
+          ) : null}
           <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-            <AnimatedCounter value={247} className="font-semibold" /> people already
-            on the waitlist
+            {showCount ? (
+              <>
+                <AnimatedCounter value={waitlistCount} className="font-semibold" />{" "}
+                people already on the waitlist
+              </>
+            ) : (
+              "Be one of the first to join."
+            )}
           </p>
         </div>
       </div>
