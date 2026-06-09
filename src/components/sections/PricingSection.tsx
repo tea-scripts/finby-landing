@@ -3,6 +3,7 @@
 import { m } from "framer-motion";
 import { Check } from "lucide-react";
 import { Reveal, useStaggerVariants } from "@/components/ui/Reveal";
+import { appUrl } from "@/lib/site";
 
 interface Plan {
   name: string;
@@ -130,8 +131,8 @@ export function PricingSection() {
               </ul>
 
               <a
-                href="#waitlist"
-                aria-label={`Join the waitlist — ${plan.name} plan`}
+                href={appUrl}
+                aria-label={`Get started with Finby — ${plan.name} plan`}
                 className={plan.featured ? "btn-accent mt-6" : "mt-6"}
                 style={
                   plan.featured
@@ -149,7 +150,7 @@ export function PricingSection() {
                       }
                 }
               >
-                Join waitlist →
+                {plan.name === "Free" ? "Get started free" : `Get ${plan.name}`}
               </a>
             </m.div>
           ))}

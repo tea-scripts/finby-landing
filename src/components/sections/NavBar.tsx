@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/ui/Logo";
+import { appUrl } from "@/lib/site";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -31,14 +32,13 @@ export function NavBar() {
         <a href="#top" aria-label="Finby home">
           <Logo />
         </a>
-        <span className="pill">
-          <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{ backgroundColor: "var(--color-accent)" }}
-            aria-hidden
-          />
-          Coming soon
-        </span>
+        <a
+          className="btn-accent"
+          href={appUrl}
+          style={{ padding: "0.6rem 1.1rem", fontSize: "14px" }}
+        >
+          Get started free
+        </a>
       </nav>
     </header>
   );

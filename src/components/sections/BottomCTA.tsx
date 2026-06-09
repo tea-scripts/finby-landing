@@ -1,13 +1,10 @@
-import { WaitlistForm } from "@/components/ui/WaitlistForm";
 import { Reveal } from "@/components/ui/Reveal";
+import { appUrl } from "@/lib/site";
 
 export function BottomCTA() {
   return (
     <section className="py-24">
-      <Reveal
-        className="section-shell"
-        style={{ maxWidth: "44rem" }}
-      >
+      <Reveal className="section-shell" style={{ maxWidth: "44rem" }}>
         <div
           className="relative overflow-hidden rounded-3xl px-6 py-14 text-center sm:px-12"
           style={{
@@ -39,17 +36,17 @@ export function BottomCTA() {
               className="mx-auto mt-4 max-w-md text-base"
               style={{ color: "var(--color-text-secondary)", lineHeight: 1.7 }}
             >
-              Join the waitlist — free forever, no credit card needed.
+              Free forever. No credit card. No bank linking.
             </p>
 
-            <div className="mx-auto mt-8 max-w-md">
-              <WaitlistForm inputId="cta-waitlist-email" />
-              <p
-                className="mt-3 text-sm"
-                style={{ color: "var(--color-text-muted)" }}
+            <div className="mt-8">
+              <a
+                className="btn-accent"
+                href={appUrl}
+                style={{ padding: "1rem 1.75rem", fontSize: "16px" }}
               >
-                We&apos;ll notify you the moment Finby is ready.
-              </p>
+                Get started free
+              </a>
             </div>
           </div>
         </div>

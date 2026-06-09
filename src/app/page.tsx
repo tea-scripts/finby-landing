@@ -6,33 +6,16 @@ import { SocialProofSection } from "@/components/sections/SocialProofSection";
 import { PricingSection } from "@/components/sections/PricingSection";
 import { BottomCTA } from "@/components/sections/BottomCTA";
 import { Footer } from "@/components/sections/Footer";
-import { prisma } from "@/lib/prisma";
 
-// Statically rendered, but re-generated every 5 minutes so the live waitlist
-// count stays fresh without a DB hit on every visitor.
-export const revalidate = 300;
-
-/** Real waitlist size. Resilient: an unreachable DB (e.g. at build) → 0. */
-async function getWaitlistCount(): Promise<number> {
-  try {
-    return await prisma.waitlistSignup.count();
-  } catch (err) {
-    console.error("[home] waitlist count failed:", err);
-    return 0;
-  }
-}
-
-export default async function Home() {
-  const waitlistCount = await getWaitlistCount();
-
+export default function Home() {
   return (
     <>
       <NavBar />
       <main>
-        <HeroSection waitlistCount={waitlistCount} />
+        <HeroSection />
         <FeaturesSection />
         <HowItWorksSection />
-        <SocialProofSection waitlistCount={waitlistCount} />
+        <SocialProofSection />
         <PricingSection />
         <BottomCTA />
       </main>

@@ -1,65 +1,55 @@
 "use client";
 
 import { m } from "framer-motion";
-import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { Reveal, useStaggerVariants } from "@/components/ui/Reveal";
-import { WAITLIST_DISPLAY_THRESHOLD } from "@/lib/site";
 
 interface Perk {
   title: string;
   body: string;
 }
 
-// Honest, company-controlled promises for early members — not testimonials.
-// Finby is pre-launch, so there are no real users to quote yet.
+// Present-tense benefits now that Finby is live — what you actually get, not
+// pre-launch promises.
 const PERKS: Perk[] = [
-  { title: "First in line", body: "Early members get access before anyone else the day we launch." },
-  { title: "Founding-member pricing", body: "Lock in a launch rate now — it won't go up on you later." },
-  { title: "Shape what we build", body: "Your feedback steers the roadmap. Early voices count the most." },
-  { title: "Privacy-first, always", body: "Your financial data is encrypted and never sold. Full stop." },
+  {
+    title: "Just chat",
+    body: "Tell Finby what you spent in plain words. It logs it, categorises it, and tracks your budget — no forms, no spreadsheets.",
+  },
+  {
+    title: "No bank linking",
+    body: "Nothing to connect, nothing to expose. You stay in control of exactly what Finby knows.",
+  },
+  {
+    title: "Every currency",
+    body: "Earn or spend across more than one currency? Finby keeps up without the mental math.",
+  },
+  {
+    title: "Private by default",
+    body: "Your financial data is encrypted and never sold. Full stop.",
+  },
 ];
 
-export function SocialProofSection({ waitlistCount }: { waitlistCount: number }) {
+export function SocialProofSection() {
   const { container, item } = useStaggerVariants();
-  const showCount = waitlistCount >= WAITLIST_DISPLAY_THRESHOLD;
 
   return (
     <section className="py-24" style={{ backgroundColor: "var(--color-surface)" }}>
       <div className="section-shell text-center">
         <Reveal>
-          {showCount ? (
-            <>
-              <p
-                className="font-black"
-                style={{
-                  fontSize: "clamp(2.5rem, 7vw, 3.5rem)",
-                  letterSpacing: "-0.04em",
-                  color: "var(--color-accent)",
-                }}
-              >
-                <AnimatedCounter value={waitlistCount} suffix="+" />
-              </p>
-              <p className="mt-2 text-base" style={{ color: "var(--color-text-secondary)" }}>
-                people have already joined the waitlist
-              </p>
-            </>
-          ) : (
-            <>
-              <p
-                className="font-black"
-                style={{
-                  fontSize: "clamp(2.25rem, 6vw, 3rem)",
-                  letterSpacing: "-0.04em",
-                  color: "var(--color-accent)",
-                }}
-              >
-                Join the first wave
-              </p>
-              <p className="mt-2 text-base" style={{ color: "var(--color-text-secondary)" }}>
-                Finby is pre-launch — here&apos;s what early members get.
-              </p>
-            </>
-          )}
+          <p
+            className="mx-auto max-w-2xl font-black"
+            style={{
+              fontSize: "clamp(1.85rem, 5vw, 2.75rem)",
+              letterSpacing: "-0.04em",
+              lineHeight: 1.12,
+              color: "var(--color-text-primary)",
+            }}
+          >
+            Money management that finally feels human.
+          </p>
+          <p className="mx-auto mt-4 max-w-md text-base" style={{ color: "var(--color-text-secondary)" }}>
+            No dashboards to learn. No bank logins. Just a conversation about your money.
+          </p>
         </Reveal>
 
         <m.div

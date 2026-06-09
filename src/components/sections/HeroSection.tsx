@@ -1,10 +1,8 @@
 "use client";
 
 import { m, useReducedMotion, type Variants } from "framer-motion";
-import { WaitlistForm } from "@/components/ui/WaitlistForm";
-import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { ChatDemo } from "@/components/sections/ChatDemo";
-import { WAITLIST_DISPLAY_THRESHOLD } from "@/lib/site";
+import { appUrl } from "@/lib/site";
 
 interface Particle {
   left: number;
@@ -36,11 +34,9 @@ function buildParticles(count: number): Particle[] {
 const PARTICLES = buildParticles(25);
 const LINE_ONE = ["Stop", "tracking."];
 const LINE_TWO = ["Start", "talking."];
-const AVATAR_TINTS = ["18%", "38%", "58%", "78%"];
 
-export function HeroSection({ waitlistCount }: { waitlistCount: number }) {
+export function HeroSection() {
   const reduceMotion = useReducedMotion();
-  const showCount = waitlistCount >= WAITLIST_DISPLAY_THRESHOLD;
 
   const headline: Variants = {
     hidden: {},
@@ -52,13 +48,6 @@ export function HeroSection({ waitlistCount }: { waitlistCount: number }) {
         hidden: { opacity: 0, y: 20 },
         show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
       };
-  const avatars: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: reduceMotion ? 0 : 0.1, delayChildren: 0.2 } },
-  };
-  const avatar: Variants = reduceMotion
-    ? { hidden: { opacity: 1, x: 0 }, show: { opacity: 1, x: 0 } }
-    : { hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0 } };
 
   const fade = (delay: number) =>
     reduceMotion
@@ -113,7 +102,7 @@ export function HeroSection({ waitlistCount }: { waitlistCount: number }) {
             style={{ backgroundColor: "var(--color-accent)" }}
             aria-hidden
           />
-          Now accepting early access
+          Finby is live
         </m.span>
 
         <m.h1
@@ -154,8 +143,7 @@ export function HeroSection({ waitlistCount }: { waitlistCount: number }) {
         </m.p>
 
         <m.div
-          id="waitlist"
-          className="mx-auto mt-8 max-w-md scroll-mt-28"
+          className="mx-auto mt-9 flex flex-wrap items-center justify-center gap-3"
           {...(reduceMotion
             ? { initial: false as const }
             : {
@@ -164,40 +152,30 @@ export function HeroSection({ waitlistCount }: { waitlistCount: number }) {
                 transition: { duration: 0.5, delay: 0.65 },
               })}
         >
-          <WaitlistForm inputId="hero-waitlist-email" />
-          <p className="mt-3 text-sm" style={{ color: "var(--color-text-muted)" }}>
-            Free to join · No spam · Ever
-          </p>
+          <a className="btn-accent" href={appUrl}>
+            Get started free
+          </a>
+          <a
+            href="#how-it-works"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "0.75rem",
+              padding: "0.875rem 1.25rem",
+              fontWeight: 600,
+              fontSize: "15px",
+              border: "1px solid var(--color-border)",
+              color: "var(--color-text-primary)",
+            }}
+          >
+            See how it works
+          </a>
         </m.div>
 
-        <div className="mt-10 flex items-center justify-center gap-3">
-          {showCount ? (
-            <m.div className="flex -space-x-2.5" variants={avatars} initial="hidden" animate="show">
-              {AVATAR_TINTS.map((tint, i) => (
-                <m.span
-                  key={i}
-                  variants={avatar}
-                  className="h-8 w-8 rounded-full"
-                  style={{
-                    backgroundColor: `color-mix(in srgb, var(--color-accent) ${tint}, var(--color-surface-hover))`,
-                    border: "2px solid var(--color-bg)",
-                  }}
-                  aria-hidden
-                />
-              ))}
-            </m.div>
-          ) : null}
-          <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-            {showCount ? (
-              <>
-                <AnimatedCounter value={waitlistCount} className="font-semibold" />{" "}
-                people already on the waitlist
-              </>
-            ) : (
-              "Be one of the first to join."
-            )}
-          </p>
-        </div>
+        <m.p className="mt-5 text-sm" style={{ color: "var(--color-text-muted)" }} {...fade(0.8)}>
+          Free forever · No bank linking · Private by default
+        </m.p>
       </div>
 
       <div className="mt-16">

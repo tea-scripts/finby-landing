@@ -23,6 +23,9 @@ function resolveSiteUrl(): string {
 
 export const siteUrl = resolveSiteUrl();
 
+/** The live Finby web app. Every primary CTA on the landing page points here. */
+export const appUrl = "https://chat.finby.app";
+
 /**
  * The live waitlist counter is only rendered once real signups cross this
  * threshold. Below it, a tiny real number reads as weak social proof, so the
