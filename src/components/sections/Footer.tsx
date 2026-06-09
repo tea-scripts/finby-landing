@@ -1,9 +1,9 @@
 import { Logo } from "@/components/ui/Logo";
 
 const LINKS = [
-  { label: "Privacy", href: "#" },
-  { label: "Terms", href: "#" },
-  { label: "Contact", href: "#" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+  { label: "Contact", href: "mailto:hello@finby.app" },
 ];
 
 export function Footer() {
